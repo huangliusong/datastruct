@@ -109,9 +109,33 @@ bool ListDelete(LinkList L,int i){
 //打印链表中每个节点的值
 void PrintList(LinkList L){
     L=L->next;
-    while (L!=nullptr) {
+    while (L!=NULL) {
         printf("%3d",L->data);
         L=L->next;
     }
     printf("\n");
+}
+
+
+int main(){
+    printf("LinkList:\n");
+    LinkList L;
+    LinkList search;
+    //CreateList1(L);//输入数据可以为3 4 5 6 7 9999
+    CreateList2(L);//输入数据可以为3 4 5 6 7 9999
+    PrintList(L);
+    search=GetElem(L, 2);
+    if (search!=NULL) {
+        printf("按照序号查找成功\n");
+        printf("%d\n",search->data);
+    }
+    search=LocateElem(L, 6);
+    if (search!=NULL) {
+        printf("按照值查找成功\n");
+        printf("%d\n",search->data);
+    }
+    ListFrontInsert(L, 2, 99);
+    PrintList(L);
+    ListDelete(L, 4);
+    PrintList(L);
 }
