@@ -105,3 +105,13 @@ bool ListDelete(LinkList L,int i){
     free(q);
     return true;
 }
+
+//打印链表中每个节点的值
+void PrintList(LinkList L){
+    L=L->next;
+    while (L!=nullptr) {
+        printf("%3d",L->data);
+        L=L->next;
+    }
+    printf("\n");
+}
