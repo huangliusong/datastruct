@@ -70,4 +70,38 @@ LNode *GetElem(LinkList L,int i){
     return p;
 }
 
-//
+//按照值查找
+LNode *LocateElem(LinkList L,ElemEype e){
+    LNode *p=L->next;
+    while (p!=NULL&&p->data!=e) {
+        p=p->next;
+    }
+    return p;
+}
+
+//新节点插入第i个位置
+bool ListFrontInsert(LinkList L,int i,ElemEype e){
+    LinkList p=GetElem(L, i-1);
+    if (NULL==p) {
+        return false;
+    }
+    LinkList s=(LNode*)malloc(sizeof(LNode));
+    s->data=e;
+    s->next=p->next;
+    p->next=s;
+    return true;
+}
+
+
+//删除节点
+bool ListDelete(LinkList L,int i){
+    LinkList p=GetElem(L, i-1);
+    if (NULL==p) {
+        return false;
+    }
+    LinkList q;
+    q=p->next;
+    p->next=q->next;
+    free(q);
+    return true;
+}
