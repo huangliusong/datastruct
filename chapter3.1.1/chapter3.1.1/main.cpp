@@ -1,15 +1,78 @@
-//
-//  main.cpp
-//  chapter3.1.1
-//
-//  Created by liusong huang on 2019/5/13.
-//  Copyright © 2019 liusong huang. All rights reserved.
-//
+#include <stdio.h>
+#include <stdlib.h>
 
-#include <iostream>
+#define MaxSize 50
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+typedef int  ElemType;
+typedef struct {
+    ElemType data[MaxSize];
+    int top;
+}SqStack;
+
+
+void InitStack(SqStack &S){
+    S.top=-1;
+}
+
+
+bool StackEmpty(SqStack &S){
+    if (S.top==-1) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+//入栈
+bool Push(SqStack &S,ElemType x){
+    if (S.top==MaxSize-1) {
+        return false;
+    }
+    S.data[++S.top]=x;
+    return true;
+}
+
+//出栈
+bool Pop(SqStack &S,ElemType &x){
+    if (-1==S.top) {
+        return false;
+    }
+    x=S.data[S.top--];
+    return true;
+}
+
+//读取栈顶元素
+bool GetTop(SqStack &S,ElemType &x){
+    if (-1==S.top) {
+        return false;
+    }
+    x=S.data[S.top];
+    return true;
+}
+
+//
+int main(){
+    SqStack S;
+    bool flag;
+    ElemType m;
+    InitStack(S);
+    flag=StackEmpty(S);
+    if (flag) {
+        printf("空\n");
+    }
+    Push(S, 3);
+    Push(S, 4);
+    Push(S, 5);
+    flag=GetTop(S, m);
+    if (flag) {
+        printf("element:%d\n",m);
+    }
+    flag=Pop(S, m);
+    if (flag) {
+        printf("pop element:%d\n");
+    }
+    system("pause");
     return 0;
 }
+
