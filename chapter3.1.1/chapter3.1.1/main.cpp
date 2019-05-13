@@ -14,61 +14,53 @@ void InitStack(SqStack &S){
     S.top=-1;
 }
 
-
-bool StackEmpty(SqStack &S){
-    if (S.top==-1) {
+bool StackEmpty(SqStack &s){
+    if (s.top==-1) {
         return true;
     }else{
         return false;
     }
 }
 
-
 //入栈
-bool Push(SqStack &S,ElemType x){
-    if (S.top==MaxSize-1) {
+bool Push(SqStack &s,ElemType x){
+    if (s.top==MaxSize-1) {
+        printf("栈溢出");
         return false;
     }
-    S.data[++S.top]=x;
-    return true;
+    s.data[++s.top]=x;
+    return false;
 }
 
 //出栈
-bool Pop(SqStack &S,ElemType &x){
-    if (-1==S.top) {
+bool Pop(SqStack &s,ElemType &x){
+    if (-1==s.top) {
         return false;
     }
-    x=S.data[S.top--];
-    return true;
-}
-
-//读取栈顶元素
-bool GetTop(SqStack &S,ElemType &x){
-    if (-1==S.top) {
-        return false;
-    }
-    x=S.data[S.top];
+    x=s.data[s.top--];
     return true;
 }
 
 //
 int main(){
-    SqStack S;
+    SqStack stack;
     bool flag;
     ElemType m;
-    InitStack(S);
-    flag=StackEmpty(S);
+    InitStack(stack);
+    flag=StackEmpty(stack);
     if (flag) {
-        printf("空\n");
+        printf("这个栈为空\n");
     }
-    Push(S, 3);
-    Push(S, 4);
-    Push(S, 5);
-    flag=GetTop(S, m);
+    Push(stack, 1);
+    Push(stack, 3);
+    Push(stack, 4);
+    Push(stack, 5);
+    flag=StackEmpty(stack);
     if (flag) {
-        printf("element:%d\n",m);
+        printf("这个栈为空\n");
     }
-    flag=Pop(S, m);
+    printf("top:%d\n",stack.top);
+    flag=Pop(stack, m);
     if (flag) {
         printf("pop element:%d\n");
     }
