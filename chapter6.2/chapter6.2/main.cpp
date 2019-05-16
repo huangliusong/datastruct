@@ -22,3 +22,73 @@ int BST_Insert(BiTree &T,KeyType k){
     else
         return BST_Insert(T->rchild, k);
 }
+
+
+void Create_BST(BiTree &T,KeyType str[],int n){
+    T=NULL;
+    int i=0;
+    while (i<n) {
+        BST_Insert(T, str[i]);
+        i++;
+    }
+}
+
+BSTNode *BST_Search(BiTree T,KeyType key,BiTree &p){
+    p=NULL;
+    while (T!=NULL&&key!=T->key) {
+        p=T;
+        if (key<T->key) {
+            T=T->lchild;
+        }else
+            T=T->rchild;
+    }
+    return T;
+}
+
+void DeleteNode(BiTree &root,KeyType x){
+    if (root==NULL) {
+        return;
+    }
+    if (root->key>x) {
+        DeleteNode(root->lchild, x);
+    }
+    else if(root->key<x){
+        DeleteNode(root->rchild, x);
+    }else{
+        if (root->lchild==NULL) {
+            BiTree tempNode=root;
+            root=root->lchild;
+            free(tempNode);
+        }else if(root->rchild==NULL){
+            BiTree tempNode=root;
+            root=root->lchild;
+            free(tempNode);
+        }else{
+            BiTree tempNode=root->lchild;
+            if (tempNode->rchild!=NULL) {
+                tempNode=tempNode->rchild;
+            }
+            root->key=tempNode->key;
+            DeleteNode(root->lchild, tempNode->key);
+        }
+    }
+}
+
+void InOrder(BiTree T){
+    if (T!=NULL) {
+        InOrder(T->lchild);
+        printf("%3d",T->key);
+        InOrder(T->rchild);
+    }
+}
+
+int main(){
+    BiTree T;
+    BiTree parent;
+    BiTree search;
+    KeyType str[]={54,20,66,40,28,79,58};
+    Create_BST(T, str, 7);
+    InOrder(T);
+    printf("\n");
+    return 1;
+}
