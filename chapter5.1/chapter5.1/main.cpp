@@ -1,15 +1,14 @@
-//
-//  main.cpp
-//  chapter5.1
-//
-//  Created by liusong huang on 2019/5/16.
-//  Copyright © 2019 liusong huang. All rights reserved.
-//
+#include <stdarg.h>
+//暂时保留
+#define MAS_ARRAY_DIM 8
 
-#include <iostream>
+typedef int ElemType;
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
-}
+typedef struct {
+    ElemType *base;
+    int dim;//数据的维数
+    int *bounds;
+    int *constans;
+}Array;
+
+
