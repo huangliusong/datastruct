@@ -20,7 +20,7 @@ int BST_Insert(BiTree &T,KeyType k){
     else if(k<T->key)
         return BST_Insert(T->lchild, k);
     else
-        return BST_Insert(T->rchild, k);
+        return BST_Insert(T->rchild, k); 
 }
 
 
