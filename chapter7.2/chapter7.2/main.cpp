@@ -46,3 +46,39 @@ static char read_char(){
     }while(!isLetter(ch));
     return ch;
 }
+
+//将node链接到list到末尾
+static void link_last(ENode *list,ENode *node){
+    ENode *p=list;
+    while (p->next_edge) {
+        p=p->next_edge;
+    }
+    p->next_edge=node;
+}
+
+LGraph* create_lgraph(){
+    char c1,c2;
+    int v,e;
+    int i,p1,p2;
+    ENode *node1,*node2;
+    LGraph* pG;
+    
+    
+    //输入“顶点数”和“边数”
+    printf("input vertex number:");
+    scanf("%d",&v);
+    printf("input edge number:");
+    scanf("%d",&e);
+    if (v<1||e<1||(e>(v*(v-1)))) {
+        printf("input error:invslid parameters!\n");
+        return NULL;
+    }
+    
+    if ((pG=(LGraph*)malloc(sizeof(LGraph))) == NULL) {
+        return NULL;
+    }
+    memset(pG, 0, sizeof(LGraph));
+    
+    //
+    
+}
