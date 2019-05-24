@@ -80,5 +80,45 @@ LGraph* create_lgraph(){
     memset(pG, 0, sizeof(LGraph));
     
     //
+    // 初始化"顶点数"和"边数"
+    pG->vexnum = v;
+    pG->edgnum = e;
+    // 初始化"邻接表"的顶点
+        for(i=0; i<pG->vexnum; i++)
+            {
+                    printf("vertex(%d): ", i);
+                    pG->vexs[i].data = read_char();
+                    pG->vexs[i].first_edge = NULL;
+                }
     
+        // 初始化"邻接表"的边
+        for(i=0; i<pG->edgnum; i++)
+            {
+                    // 读取边的起始顶点和结束顶点
+                    printf("edge(%d): ", i);
+                    c1 = read_char();
+                    c2 = read_char();
+            
+                    p1 = get_position(*pG, c1);
+                    p2 = get_position(*pG, c2);
+            
+                    // 初始化node1
+                    node1 = (ENode*)calloc(1,sizeof(ENode));
+                    node1->ivex = p2;
+                    // 将node1链接到"p1所在链表的末尾"
+                    if(pG->vexs[p1].first_edge == NULL)
+                          pG->vexs[p1].first_edge = node1;
+                    else
+                            link_last(pG->vexs[p1].first_edge, node1);
+                    // 初始化node2
+                    node2 = (ENode*)calloc(1,sizeof(ENode));
+                    node2->ivex = p1;
+                    // 将node2链接到"p2所在链表的末尾"
+                    if(pG->vexs[p2].first_edge == NULL)
+                          pG->vexs[p2].first_edge = node2;
+                    else
+                            link_last(pG->vexs[p2].first_edge, node2);
+                }
+    
+        return pG;
 }
