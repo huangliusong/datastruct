@@ -106,6 +106,25 @@ void PrintList(LinkList L)
     }
     printf("\n");
 }
+
+//递归顺序输出单链表的值
+void print_s(LinkList L){
+    printf("值：%d",L->data);
+    if (L->next!=NULL) {
+        print_s(L->next);
+    }
+  
+}
+
+//递归逆序输出单链表中的值
+
+void print_n(LinkList L){
+    if (L->next!=NULL) {
+        print_n(L->next);
+    }
+    printf("值：%d",L->data);
+}
+
 int main()
 {
     LinkList L;
@@ -129,5 +148,13 @@ int main()
     PrintList(L);
     ListDelete(L, 4);
     PrintList(L);
+    //逆序
+    print_n(L);
+    //
+    printf("\n");
+    //顺序
+    print_s(L);
+
     system("pause");
 }
+
