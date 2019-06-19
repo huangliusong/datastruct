@@ -1,138 +1,133 @@
-//
-//  a.c
-//  chapter7.3
-//
-//  Created by liusong huang on 2019/6/19.
-//  Copyright © 2019 liusong huang. All rights reserved.
-//
+#include <stdio.h>
+#include <stdlib.h>
 
-#include "a.h"
 typedef int ElemType;
 typedef struct LNode
 {
     ElemType data;
     struct LNode *next;
 } LNode, *LinkList;
-//不带头节点的链表
-void Del_x(Linklist &L, ElemType x)
+//头插法新建链表
+LinkList CreatList1(LinkList &L)
 {
-    LNode *p;
-    if (L == NULL)
-    { //p指向待删除节点
-        return;
-    }
-    if (L->data == x)
+    LNode *s;
+    int x;
+    L = (LinkList)malloc(sizeof(LNode)); //带头节点的链表
+    L->next = NULL;
+    scanf("%d", &x);
+    while (x != 9999)
     {
-        p = L; //p指向待删除节点
-        L = L->data;
-        free(p);
-        Del_x(L, x);
+        s = (LNode *)malloc(sizeof(LNode));
+        s->data = x;
+        s->next = L->next;
+        L->next = s;
+        scanf("%d", &x);
     }
-    else
-    {
-        Del_x(L->data, x); //递归调用
-    }
-}
-
-//解法1
-void Delete_x1(LinkList &L, ElemType x)
-{
-    //L 为带头结点的单链表，本算法删除L中的所有值为x的节点
-    LNode *p = L->next, *pre = L, *q; //
-    while (p != NULL)
-    {
-        if (p->data == x)
-        {
-            q = p;
-            p = p->next;
-            pre->next = p;
-            free(p);
-        }
-        else
-        {
-            pre = p;
-            p = p->next;
-        } //else end
-    }     //while end
-}
-
-//解法2：采用尾插法
-void Delete_x2(LinkList &L, ElemType x)
-{
-    //r指向尾节点，其初值为头节点
-    LNode *p = L->data, *r = L, *p;
-    while (p != NULL)
-    {
-        if (p->data != x)
-        {
-            r->next = p;
-            r = p;
-            p = p->next;
-        }
-        else
-        {
-            q = p;
-            p = p->next; //继续扫描
-            free(q);     //释放空间
-        }
-    }
-    r->next = NULL;
-}
-
-void print_element(LinkList L)
-{
-    //从尾部到头部输出单链表中到每个元素
-    if (L->next != NULL)
-    {
-        print_element(L->next); //递归
-    }
-    prinft(L->data);
-}
-
-LinkList Delete_Min(LinkList &L)
-{
-    //L是带头节点的单链表，本算法删除其最小节点
-    LNode *pre = L, *p = pre->next;
-    LNode *minpre = pre, *minp = p; //保存最小值结点及其前驱
-    while (p != NULL)
-    {
-        if (p->data < minp->data)
-        {
-            minp = p;
-            minpre = pre;
-        }
-        pre = p; //继续扫描下一个节点
-        p = p->next;
-    }
-    minpre->next = minp->next;
-    free(minp);
     return L;
 }
-
-LinkList reverse_1(LinkList L)
+//尾插法新建链表
+LinkList CreatList2(LinkList &L)
 {
-    //L是带头节点的单链表，本算法将L就地逆置
-    LNode *p, *r;
-    p = L->next;
-    L->next = NULL;
-}
-
-void RangeDelete(LinkList &L, int min, int max)
-{
-    LNode *pre = L, *p = L->link;
-    while (p->next != null)
+    int x;
+    L = (LinkList)malloc(sizeof(LNode)); //带头节点的链表
+    LNode *s, *r = L;
+    scanf("%d", &x);
+    while (x != 9999)
     {
-        //寻找到被删除的节点，删除
-        if (p->data > min && p->data < max)
-        {
-            pre->link = p->link;
-            free(p);
-            p = pre->link;
-        }
-        else //没有寻找到节点
-        {
-            pre = p;
-            p = p->link;
-        }
+        s = (LNode *)malloc(sizeof(LNode));
+        s->data = x;
+        r->next = s;
+        r = s; //r指向新的表尾结点
+        scanf("%d", &x);
     }
+    r->next = NULL;
+    return L;
+}
+//按序号查找结点值
+LNode *GetElem(LinkList L, int i)
+{
+    int j = 1;
+    LNode *p = L->next;
+    if (i == 0)
+        return L;
+    if (i < 1)
+        return NULL;
+    while (p && j < i)
+    {
+        p = p->next;
+        j++;
+    }
+    return p;
+}
+//按值查找
+LNode *LocateElem(LinkList L, ElemType e)
+{
+    LNode *p = L->next;
+    while (p != NULL && p->data != e)
+        p = p->next;
+    return p;
+}
+//新结点插入第i个位置
+bool ListFrontInsert(LinkList L, int i, ElemType e)
+{
+    LinkList p = GetElem(L, i - 1);
+    if (NULL == p)
+    {
+        return false;
+    }
+    LinkList s = (LNode *)malloc(sizeof(LNode)); //为新插入的结点申请空间
+    s->data = e;
+    s->next = p->next;
+    p->next = s;
+    return true;
+}
+//删除第i个结点
+bool ListDelete(LinkList L, int i)
+{
+    LinkList p = GetElem(L, i - 1);
+    if (NULL == p)
+    {
+        return false;
+    }
+    LinkList q;
+    q = p->next;
+    p->next = q->next;
+    free(q);
+    return true;
+}
+//打印链表中每个结点的值
+void PrintList(LinkList L)
+{
+    L = L->next;
+    while (L != NULL)
+    {
+        printf("%3d", L->data);
+        L = L->next;
+    }
+    printf("\n");
+}
+int main()
+{
+    LinkList L;
+    LinkList search;
+    //CreatList1(L);//输入数据可以为3 4 5 6 7 9999
+    CreatList2(L); //输入数据可以为3 4 5 6 7 9999
+    PrintList(L);
+    search = GetElem(L, 2);
+    if (search != NULL)
+    {
+        printf("按序号查找成功\n");
+        printf("%d\n", search->data);
+    }
+    search = LocateElem(L, 6);
+    if (search != NULL)
+    {
+        printf("按值查找成功\n");
+        printf("%d\n", search->data);
+    }
+    ListFrontInsert(L, 2, 99);
+    PrintList(L);
+    ListDelete(L, 4);
+    PrintList(L);
+    system("pause");
 }
