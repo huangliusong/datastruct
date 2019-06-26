@@ -32,7 +32,11 @@ int init_queue(SqQueue &sq){
     return OK;
 }
 
+
+//tag d入队
+
 int main(){
     SqQueue sq;
     init_queue(sq);
+    printf("init success!\n");
 }
