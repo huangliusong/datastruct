@@ -141,5 +141,7 @@ int main()
             cout<<q.data[i]<<" ";
         }
     }
+    
+    
 }
 
